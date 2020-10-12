@@ -1,12 +1,13 @@
 import React from 'react';
 import Header from './components/Header';
 import './App.css';
+import Container from 'react-bootstrap/Container';
 
-function App() {
+const App = () => {
   return (
-    <div className="App">
+    <Container className="App">
       <Header />
-    </div>
+    </Container>
   );
 }
 
