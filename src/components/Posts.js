@@ -10,7 +10,7 @@ const Posts = () => {
   const { posts } = context;
 
   useEffect(() => {
-    context.searchPosts();
+    context.getPosts();
     // eslint-disable-next-line
   }, []);
 

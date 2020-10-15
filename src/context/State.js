@@ -6,17 +6,19 @@ import { GET_POSTS } from './Types';
 
 const State = (props) => {
 
-  const searchPosts = async () => {
+  const getPosts = async () => {
+    //const res = await axios.get(`https://roaditbeck.herokuapp.com/api/v1/feed`);
     const res = await axios.get(`http://localhost:8080/api/v1/feed`);
     const {pageList, pages} = res.data;
     dispatch({
       type: GET_POSTS,
-      payload:pageList,
+      payload: {pageList, pages,}
     });
   };
 
   const initialState = {
     posts: [],
+    page: 0,
   };
 
   const [state, dispatch] = useReducer(Reducer, initialState);
@@ -25,7 +27,8 @@ const State = (props) => {
     <Context.Provider
       value={{
         posts: state.posts,
-        searchPosts
+        page: state.page,
+        getPosts
       }}
     >
       {props.children}

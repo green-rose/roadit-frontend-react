@@ -5,7 +5,8 @@ export default (state, action) => {
     case GET_POSTS:
       return {
         ...state,
-        posts: action.payload,
+        posts: action.payload.pageList,
+        page: action.payload.page
       };
     default:
       return state;
