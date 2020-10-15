@@ -17,7 +17,7 @@ const Header = ({ user }) => {
         <div className='col-md-12'>
           <Navbar bg='light' expand='lg' sticky>
             <Navbar.Brand href='/'>
-              <i class='fas fa-bullseye'></i> ROADit
+              <i className='fas fa-bullseye'></i> ROADit
             </Navbar.Brand>
             <Navbar.Toggle aria-controls='basic-navbar-nav' />
             <Navbar.Collapse id='basic-navbar-nav'>
@@ -40,11 +40,11 @@ const Header = ({ user }) => {
                 />
                 <Button variant='outline-success'>Search</Button>
               </Form>
-              <Nav className='mr-auto'>
+              <Nav className='mr-sm-2'>
                 {user != null ? (
                   <NavDropdown
                     title='User'
-                    id='basic-nav-dropdown'
+                    id='basic-nav-sm-2'
                   ></NavDropdown>
                 ) : (
                   <Nav.Link href='/login' className='mr-sm-2'>

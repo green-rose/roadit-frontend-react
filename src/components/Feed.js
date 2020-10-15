@@ -1,10 +1,10 @@
-import React from 'react';
-import { Container, Row } from 'react-bootstrap';
+import React, { Fragment } from 'react';
+import Posts from './Posts';
 const Feed = () => {
   return (
-    <Container>
-      <Row></Row>
-    </Container>
+    <Fragment>
+      <Posts />
+    </Fragment>
   );
 };
 

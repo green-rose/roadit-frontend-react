@@ -6,20 +6,22 @@ import NotFound from './components/NotFound';
 
 import './App.css';
 import Container from 'react-bootstrap/Container';
-
+import State from './context/State';
 const App = () => {
   return (
-    <Router>
-      <div className='App'>
-        <Header />
-        <Container>
-          <Switch>
-            <Route exact path='/' component={Feed} />
-            <Route component={NotFound} />
-          </Switch>
-        </Container>
-      </div>
-    </Router>
+    <State>
+      <Router>
+        <div className='App'>
+          <Header />
+          <Container>
+            <Switch>
+              <Route exact path='/' component={Feed} />
+              <Route component={NotFound} />
+            </Switch>
+          </Container>
+        </div>
+      </Router>
+    </State>
   );
 };
 
