@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {
   Container,
   Row,
@@ -9,8 +9,11 @@ import {
   FormControl,
   Button,
 } from 'react-bootstrap';
+import Context from '../context/Context';
 
-const Header = ({ user }) => {
+const Header = () => {
+  const context = useContext(Context);
+  const { user } = context;
   return (
     <Container>
       <Row>
@@ -43,12 +46,12 @@ const Header = ({ user }) => {
               <Nav className='mr-sm-2'>
                 {user != null ? (
                   <NavDropdown
-                    title='User'
+                    title={user}
                     id='basic-nav-sm-2'
-                  ></NavDropdown>
+                ><NavDropdown.Item href='/logout'>Logout</NavDropdown.Item></NavDropdown>
                 ) : (
                   <Nav.Link href='/login' className='mr-sm-2'>
-                    Login
+                    Login{user}
                   </Nav.Link>
                 )}
               </Nav>
@@ -58,10 +61,6 @@ const Header = ({ user }) => {
       </Row>
     </Container>
   );
-};
-
-Header.defaultProps = {
-  user: null,
 };
 
 export default Header;
