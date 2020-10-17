@@ -1,10 +1,12 @@
 import React, { useState, useContext, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import Context from '../context/Context';
-
-const Login = props => {
+import { Form, Row, Col, Button } from 'react-bootstrap';
+import Spinner from './Spinner';
+const Login = (props) => {
   const context = useContext(Context);
 
-  const { login, error, clearErrors, isAuthenticated } = context;
+  const { login, error, clearErrors, isAuthenticated, loading, load } = context;
 
   useEffect(() => {
     if (isAuthenticated) {
@@ -19,59 +21,78 @@ const Login = props => {
 
   const [user, setUser] = useState({
     username: '',
-    password: ''
+    password: '',
   });
 
   const { username, password } = user;
 
-  const onChange = e => setUser({ ...user, [e.target.name]: e.target.value });
+  const onChange = (e) => setUser({ ...user, [e.target.name]: e.target.value });
 
-  const onSubmit = e => {
+  const onSubmit = (e) => {
     e.preventDefault();
     if (username === '' || password === '') {
-    
     } else {
+      load();
       login({
         username,
-        password
+        password,
       });
     }
   };
 
+  if (loading) return <Spinner />
+  
   return (
     <div className='form-container'>
       <h1>
         Account <span className='text-success'>Login</span>
       </h1>
-      <form onSubmit={onSubmit}>
-        <div className='form-group'>
-          <label htmlFor='username'>Username: </label>
-          <input
-            id='username'
-            type='text'
-            name='username'
-            value={username}
-            onChange={onChange}
-            required
-          />
-        </div>
-        <div className='form-group'>
-          <label htmlFor='password'>Password: </label>
-          <input
-            id='password'
-            type='password'
-            name='password'
-            value={password}
-            onChange={onChange}
-            required
-          />
-        </div>
-        <input
-          type='submit'
-          value='Login'
-          className='btn btn-outline-success'
-        />
-      </form>
+      <Form onSubmit={onSubmit}>
+        <Form.Group as={Row}>
+          <Form.Label column sm={2} htmlFor='username'>
+            Username:
+          </Form.Label>
+          <Col sm={6}>
+            <Form.Control
+              id='username'
+              type='text'
+              name='username'
+              placeholder='Email'
+              value={username}
+              onChange={onChange}
+              required
+            />
+          </Col>
+        </Form.Group>
+        <Form.Group as={Row}>
+          <Form.Label column sm={2} htmlFor='password'>
+            Username:
+          </Form.Label>
+          <Col sm={6}>
+            <Form.Control
+              id='password'
+              type='password'
+              name='password'
+              placeholder='Password'
+              value={password}
+              onChange={onChange}
+              required
+            />
+          </Col>
+        </Form.Group>
+        <Form.Group as={Row}>
+          <Col sm={{ span: 6, offset: 2 }}>
+            <Button className='btn btn-success' type='submit'>
+              Login
+            </Button>
+          </Col>
+        </Form.Group>
+      </Form>
+      <p>
+        <Link to='/register' className='btn btn-light'>
+          Not registered yet?
+        </Link>
+      </p>
     </div>
   );
 };

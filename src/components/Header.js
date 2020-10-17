@@ -13,7 +13,7 @@ import Context from '../context/Context';
 
 const Header = () => {
   const context = useContext(Context);
-  const { user } = context;
+  const { user, logout } = context;
   return (
     <Container>
       <Row>
@@ -48,10 +48,10 @@ const Header = () => {
                   <NavDropdown
                     title={user}
                     id='basic-nav-sm-2'
-                ><NavDropdown.Item href='/logout'>Logout</NavDropdown.Item></NavDropdown>
+                ><NavDropdown.Item onClick={logout}>Logout</NavDropdown.Item></NavDropdown>
                 ) : (
                   <Nav.Link href='/login' className='mr-sm-2'>
-                    Login{user}
+                    Login
                   </Nav.Link>
                 )}
               </Nav>

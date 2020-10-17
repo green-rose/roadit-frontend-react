@@ -2,7 +2,7 @@ import React, { useReducer } from 'react';
 import axios from 'axios';
 import Context from './Context';
 import Reducer from './Reducer';
-import { GET_POSTS, LOGIN_SUCCESS, LOGIN_FAIL, LOG_OUT} from './Types';
+import { GET_POSTS, LOGIN_SUCCESS, LOGIN_FAIL, LOG_OUT, LOADING} from './Types';
 
 const State = (props) => {
 
@@ -10,7 +10,7 @@ const State = (props) => {
     token: localStorage.getItem('token'),
     posts: [],
     page: 0,
-    loading: true,
+    loading: false,
     isAuthenticated: null,
     user: null,
   };
@@ -18,7 +18,7 @@ const State = (props) => {
   const [state, dispatch] = useReducer(Reducer, initialState);
 
   const getPosts = async () => {
-
+    load();
     const res = await axios.get(`https://roaditbeck.herokuapp.com/api/v1/feed`);
     //const res = await axios.get(`http://localhost:8080/api/v1/feed`);
     const { pageList, pages } = res.data;
@@ -62,7 +62,21 @@ const State = (props) => {
         payload: err.data
       });
     };
-};
+  };
+
+  const logout = () =>{
+    dispatch({
+      type: LOG_OUT,
+      payload:"",
+    });
+  }
+
+  const load = () =>{
+    dispatch({
+      type: LOADING,
+      payload:"",
+    });
+  }
 
   return (
     <Context.Provider
@@ -75,6 +89,8 @@ const State = (props) => {
         user: state.user,
         getPosts,
         login,
+        logout,
+        load,
       }}
     >
       {props.children}

@@ -4,6 +4,7 @@ import Header from './components/Header';
 import Feed from './components/Feed';
 import Login from './components/Login';
 import Logout from './components/Login';
+import Register from './components/Register';
 import NotFound from './components/NotFound';
 
 import './App.css';
@@ -20,6 +21,7 @@ const App = () => {
               <Route exact path='/' component={Feed} />
               <Route exact path='/login' component={Login} />
               <Route exact path='/logout' component={Logout} />
+              <Route exact path='/register' component={Register} />
               <Route component={NotFound} />
             </Switch>
           </Container>
