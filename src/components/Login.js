@@ -66,7 +66,7 @@ const Login = (props) => {
         </Form.Group>
         <Form.Group as={Row}>
           <Form.Label column sm={2} htmlFor='password'>
-            Username:
+            Password:
           </Form.Label>
           <Col sm={6}>
             <Form.Control

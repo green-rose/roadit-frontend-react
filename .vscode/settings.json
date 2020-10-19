@@ -4,5 +4,10 @@
         "vue-html": "html"
     },
     "emmet.extensionsPath": "",
-    "emmet.triggerExpansionOnTab": true
+    "emmet.triggerExpansionOnTab": true,
+    "prettier.stylelintIntegration": true,
+    "prettier.singleQuote": true,
+    "prettier.jsxSingleQuote": true,
+    "prettier.jsxBracketSameLine": true,
+    "editor.formatOnSave": true
  }
