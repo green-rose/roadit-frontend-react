@@ -3,17 +3,26 @@ import { Link } from 'react-router-dom';
 import Context from '../context/Context';
 import { Form, Row, Col, Button } from 'react-bootstrap';
 import Spinner from './Spinner';
+
 const Login = (props) => {
   const context = useContext(Context);
 
-  const { login, error, clearErrors, isAuthenticated, loading, load } = context;
+  const {
+    login,
+    error,
+    clearErrors,
+    isAuthenticated,
+    setAlert,
+    loading,
+  } = context;
 
   useEffect(() => {
     if (isAuthenticated) {
       props.history.push('/');
     }
 
-    if (error === 'Invalid Credentials') {
+    if (error) {
+      setAlert(error, 'danger');
       clearErrors();
     }
     // eslint-disable-next-line
@@ -32,7 +41,6 @@ const Login = (props) => {
     e.preventDefault();
     if (username === '' || password === '') {
     } else {
-      load();
       login({
         username,
         password,
@@ -40,8 +48,8 @@ const Login = (props) => {
     }
   };
 
-  if (loading) return <Spinner />
-  
+  if (loading) return <Spinner />;
+
   return (
     <div className='form-container'>
       <h1>

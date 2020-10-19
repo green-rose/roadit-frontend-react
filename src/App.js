@@ -6,6 +6,7 @@ import Login from './components/Login';
 import Logout from './components/Login';
 import Register from './components/Register';
 import NotFound from './components/NotFound';
+import Alerts from './components/Alerts';
 
 import './App.css';
 import Container from 'react-bootstrap/Container';
@@ -17,6 +18,7 @@ const App = () => {
         <div className='App'>
           <Header />
           <Container>
+            <Alerts />
             <Switch>
               <Route exact path='/' component={Feed} />
               <Route exact path='/login' component={Login} />

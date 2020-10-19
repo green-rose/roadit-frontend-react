@@ -10,6 +10,9 @@ import {
   LOADING,
   REGISTER_SUCCESS,
   REGISTER_FAIL,
+  SET_ALERT,
+  REMOVE_ALERT,
+  CLEAR_ERRORS,
 } from './Types';
 
 const State = (props) => {
@@ -20,14 +23,16 @@ const State = (props) => {
     loading: false,
     isAuthenticated: null,
     user: null,
+    alerts: [],
+    error: null,
   };
 
   const [state, dispatch] = useReducer(Reducer, initialState);
 
   const getPosts = async () => {
     load();
-    const res = await axios.get(`https://roaditbeck.herokuapp.com/api/v1/feed`);
-    //const res = await axios.get(`http://localhost:8080/api/v1/feed`);
+    //const res = await axios.get(`https://roaditbeck.herokuapp.com/api/v1/feed`);
+    const res = await axios.get(`http://localhost:8080/api/v1/feed`);
     const { pageList, pages } = res.data;
     dispatch({
       type: GET_POSTS,
@@ -35,6 +40,15 @@ const State = (props) => {
     });
   };
 
+  const setAlert = (msg, type, timeout = 5000) => {
+    const id = msg + Math.floor(Math.random() * 101);
+    dispatch({
+      type: SET_ALERT,
+      payload: { msg, type, id },
+    });
+
+    setTimeout(() => dispatch({ type: REMOVE_ALERT, payload: id }), timeout);
+  };
   // eslint-disable-next-line
   const setAuthToken = (token) => {
     if (token) {
@@ -67,10 +81,9 @@ const State = (props) => {
       });
       setAuthToken(localStorage.token);
     } catch (err) {
-      console.error(err.message);
       dispatch({
         type: LOGIN_FAIL,
-        payload: err.data,
+        payload: err.response.data.message,
       });
     }
   };
@@ -84,7 +97,7 @@ const State = (props) => {
     };
 
     try {
-      const res = await axios.post(
+      await axios.post(
         'http://localhost:8080/register',
         { username, password },
         config
@@ -94,12 +107,11 @@ const State = (props) => {
       dispatch({
         type: REGISTER_SUCCESS,
       });
-      login(res.data);
+      login({ username, password });
     } catch (err) {
-      console.error(err.message);
       dispatch({
         type: REGISTER_FAIL,
-        payload: err.data,
+        payload: err.response.data.message,
       });
     }
   };
@@ -116,6 +128,8 @@ const State = (props) => {
     });
   };
 
+  const clearErrors = () => dispatch({ type: CLEAR_ERRORS });
+
   return (
     <Context.Provider
       value={{
@@ -125,11 +139,15 @@ const State = (props) => {
         page: state.page,
         loading: state.loading,
         user: state.user,
+        error: state.error,
+        alerts: state.alerts,
         getPosts,
         login,
         logout,
         load,
         register,
+        clearErrors,
+        setAlert,
       }}>
       {props.children}
     </Context.Provider>

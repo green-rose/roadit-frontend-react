@@ -7,7 +7,25 @@ import Spinner from './Spinner';
 export const Register = (props) => {
   const context = useContext(Context);
 
-  const { register, loading } = context;
+  const {
+    register,
+    loading,
+    error,
+    clearErrors,
+    isAuthenticated,
+    setAlert,
+  } = context;
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      props.history.push('/');
+    }
+    if (error) {
+      setAlert(error, 'danger');
+      clearErrors();
+    }
+    // eslint-disable-next-line
+  }, [error, isAuthenticated, props.history]);
 
   const [user, setUser] = useState({
     username: '',
@@ -21,7 +39,10 @@ export const Register = (props) => {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    if (username === '' || password === '' || password !== password2) {
+    if (username === '' || password === '') {
+      setAlert('Please enter all fields', 'danger');
+    } else if (password !== password2) {
+      setAlert('Passwords do not match', 'danger');
     } else {
       register({
         username,

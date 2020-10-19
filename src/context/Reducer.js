@@ -5,7 +5,10 @@ import {
   LOG_OUT,
   LOADING,
   REGISTER_SUCCESS,
-  REGISTER_FAIL
+  REGISTER_FAIL,
+  SET_ALERT,
+  REMOVE_ALERT,
+  CLEAR_ERRORS,
 } from './Types';
 
 export default (state, action) => {
@@ -39,6 +42,7 @@ export default (state, action) => {
         token: null,
         isAuthenticated: false,
         user: null,
+        error: action.payload,
       };
     case GET_POSTS:
       return {
@@ -46,6 +50,23 @@ export default (state, action) => {
         posts: action.payload.pageList,
         page: action.payload.page,
         loading: false,
+      };
+    case SET_ALERT:
+      console.log(state.alerts);
+      return {
+        ...state,
+        alerts: [action.payload, ...state.alerts],
+        loading: false,
+      };
+    case REMOVE_ALERT:
+      return {
+        ...state,
+        alerts: state.alerts.filter((alert) => alert.id !== action.payload),
+      };
+    case CLEAR_ERRORS:
+      return {
+        ...state,
+        error: null,
       };
     default:
       return state;
