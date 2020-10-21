@@ -32,7 +32,9 @@ const State = (props) => {
   const getPosts = async () => {
     load();
     //const res = await axios.get(`https://roaditbeck.herokuapp.com/api/v1/feed`);
-    const res = await axios.get(`http://localhost:8080/api/v1/feed`);
+    const res = await axios.get(
+      process.env.REACT_APP_BACKEND_URL + `/api/v1/feed`
+    );
     const { pageList, pages } = res.data;
     dispatch({
       type: GET_POSTS,
@@ -68,7 +70,7 @@ const State = (props) => {
 
     try {
       const res = await axios.post(
-        'http://localhost:8080/login',
+        process.env.REACT_APP_BACKEND_URL + '/login',
         formData,
         config
       );
@@ -98,7 +100,7 @@ const State = (props) => {
 
     try {
       await axios.post(
-        'http://localhost:8080/register',
+        process.env.REACT_APP_BACKEND_URL + '/register',
         { username, password },
         config
       );
